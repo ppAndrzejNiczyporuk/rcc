@@ -2,11 +2,9 @@ package conda
 
 import (
 	"fmt"
-	"os"
 	"regexp"
 	"strings"
 
-	"github.com/robocorp/rcc/cloud"
 	"github.com/robocorp/rcc/common"
 	"github.com/robocorp/rcc/pathlib"
 
@@ -656,21 +654,6 @@ func CondaYamlFrom(content []byte) (*Environment, error) {
 		return nil, err
 	}
 	return result.AsEnvironment(), nil
-}
-
-func readCondaYaml(filename string) (*Environment, error) {
-	var content []byte
-	var err error
-
-	if pathlib.IsFile(filename) {
-		content, err = os.ReadFile(filename)
-	} else {
-		content, err = cloud.ReadFile(filename)
-	}
-	if err != nil {
-		return nil, fmt.Errorf("%q: %w", filename, err)
-	}
-	return CondaYamlFrom(content)
 }
 
 func pipContent(result []*Dependency, value interface{}) []*Dependency {

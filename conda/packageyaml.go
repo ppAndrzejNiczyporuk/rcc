@@ -7,7 +7,6 @@ import (
 	"strings"
 
 	"github.com/robocorp/rcc/cloud"
-	"github.com/robocorp/rcc/common"
 	"github.com/robocorp/rcc/pathlib"
 	"gopkg.in/yaml.v2"
 )
@@ -90,25 +89,19 @@ func packageYamlFrom(content []byte, devDependencies bool) (*Environment, error)
 	return result.AsEnvironment(devDependencies), nil
 }
 
-func ReadPackageCondaYaml(filename string, devDependencies bool) (*Environment, error) {
+func ReadPackageCondaYamlFromContents(content []byte, filename string, devDependencies bool) (*Environment, error) {
 	basename := strings.ToLower(filepath.Base(filename))
 	if basename == "package.yaml" {
-		environment, err := readPackageYaml(filename, devDependencies)
-		if err == nil {
-			return environment, nil
-		}
+		return packageYamlFrom(content, devDependencies)
 	}
 	if devDependencies {
 		// error: only valid when dealing with a `package.yaml` file
 		return nil, fmt.Errorf("'--devdeps' flag is only valid when dealing with a `package.yaml` file. Current file: %q", filename)
 	}
-	return readCondaYaml(filename)
+	return CondaYamlFrom(content)
 }
 
-func readPackageYaml(filename string, devDependencies bool) (*Environment, error) {
-	if devDependencies {
-		common.Debug("Reading file %q with dev dependencies", filename)
-	}
+func ReadPackageCondaYaml(filename string, devDependencies bool) (*Environment, error) {
 	var content []byte
 	var err error
 
@@ -120,5 +113,6 @@ func readPackageYaml(filename string, devDependencies bool) (*Environment, error
 	if err != nil {
 		return nil, fmt.Errorf("%q: %w", filename, err)
 	}
-	return packageYamlFrom(content, devDependencies)
+
+	return ReadPackageCondaYamlFromContents(content, filename, devDependencies)
 }

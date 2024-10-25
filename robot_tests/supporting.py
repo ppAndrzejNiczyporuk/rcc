@@ -2,6 +2,7 @@ import json
 import logging
 import subprocess
 import sys
+from pathlib import Path
 
 log = logging.getLogger(__name__)
 
@@ -61,6 +62,7 @@ def run_and_return_code_output_error(
     env: dict[str, str] | None = None,
     cwd: str | None = None,
     check: bool = False,
+    stdin_contents: str | None = None,
 ) -> tuple[int, str, str]:
     command = fix_command(command)
     cwd = get_cwd() if cwd is None else cwd
@@ -71,10 +73,13 @@ def run_and_return_code_output_error(
         shell=True,
         stderr=subprocess.PIPE,
         stdout=subprocess.PIPE,
+        stdin=subprocess.PIPE if stdin_contents else None,
         cwd=cwd,
         env=env,
     )
-    out, err = task.communicate()
+    out, err = task.communicate(
+        input=stdin_contents.encode("utf-8") if stdin_contents else None
+    )
     if check:
         assert (
             task.returncode == 0
@@ -114,11 +119,17 @@ def normalize_output(output: str) -> str:
 
 
 def run_and_check_expected_output(
-    command: str, expected_output: str, expected_file: str, use_stream: str = "stdout"
+    command: str,
+    expected_output: str,
+    expected_file: str,
+    use_stream: str = "stdout",
+    pass_file_as_stdin: Path | None = None,
 ):
-    from pathlib import Path
+    stdin_contents = pass_file_as_stdin.read_text() if pass_file_as_stdin else None
 
-    ret, out, err = run_and_return_code_output_error(command)
+    ret, out, err = run_and_return_code_output_error(
+        command, stdin_contents=stdin_contents
+    )
     assert (
         ret == 0
     ), f"Unexpected exit code {ret!r} from {command!r} with output: {out!r} and error: {err!r}"

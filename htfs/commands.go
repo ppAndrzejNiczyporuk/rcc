@@ -270,12 +270,17 @@ func ComposeFinalBlueprint(userFiles []string, packfile string, devDependencies 
 		fail.On(err != nil, "Failure: %v", err)
 	}
 	fail.On(right == nil, "Missing environment specification(s).")
-	content, err := right.AsYaml()
-	fail.On(err != nil, "YAML error: %v", err)
-	blueprint = []byte(strings.TrimSpace(content))
+	blueprint, err = BlueprintFromEnvironment(right)
+	fail.On(err != nil, "Blueprint from environment error: %v", err)
 	if !right.IsCacheable() {
 		fingerprint := common.BlueprintHash(blueprint)
 		pretty.Warning("Holotree blueprint %q is not publicly cacheable. Use `rcc robot diagnostics` to find out more.", fingerprint)
 	}
 	return config, blueprint, nil
+}
+
+func BlueprintFromEnvironment(environment *conda.Environment) ([]byte, error) {
+	content, err := environment.AsYaml()
+	fail.On(err != nil, "YAML error: %v", err)
+	return []byte(strings.TrimSpace(content)), nil
 }

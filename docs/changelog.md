@@ -1,5 +1,11 @@
 # rcc change log
 
+## v18.5.0 (date: 25.10.2024)
+
+- support `--stdin` flag in `rcc holotree hash` to read the package file content from stdin
+  (note that the actual package file path still is expected to be given as an
+  argument, but its contents will be read from stdin instead).
+
 ## v18.4.0 (date: 25.10.2024)
 
 - support `--show-blueprint` flag in `rcc holotree hash` to show blueprint.
