@@ -2,11 +2,11 @@
 
 ## v18.3.0 (date: 22.10.2024)
 
-- support `--devenv` flag in `rcc holotree hash` to compute hash considering `dev-dependencies`.
+- support `--devdeps` flag in `rcc holotree hash` to compute hash considering `dev-dependencies`.
 
 ## v18.2.0 (date: 21.10.2024)
 
-- support for a `--devenv` flag to install `dev-dependencies` in a `package.yaml`.
+- support for a `--devdeps` flag to install `dev-dependencies` in a `package.yaml`.
   - supported in `rcc ht variables` and `rcc ht venv` commands.
 
 ## v18.1.7 (date: 17.10.2024)
