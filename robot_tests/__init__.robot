@@ -1,5 +1,5 @@
 *** Settings ***
-Resource        resources.robot
+Resource    resources.robot
 Suite Setup     Prepare Local
 Suite Teardown  Clean Local
 

@@ -13,8 +13,7 @@ import (
 func holotreeExpandBlueprint(userFiles []string, packfile string) map[string]interface{} {
 	result := make(map[string]interface{})
 
-    devDependencies := false
-	_, holotreeBlueprint, err := htfs.ComposeFinalBlueprint(userFiles, packfile, devDependencies)
+	_, holotreeBlueprint, err := htfs.ComposeFinalBlueprint(userFiles, packfile, common.DevDependencies)
 	pretty.Guard(err == nil, 5, "%s", err)
 
 	common.Debug("FINAL blueprint:\n%s", string(holotreeBlueprint))
@@ -53,4 +52,5 @@ func init() {
 	holotreeCmd.AddCommand(holotreeBlueprintCmd)
 	holotreeBlueprintCmd.Flags().StringVarP(&robotFile, "robot", "r", "robot.yaml", "Full path to 'robot.yaml' configuration file. <optional>")
 	holotreeBlueprintCmd.Flags().BoolVarP(&holotreeJson, "json", "j", false, "Show environment as JSON.")
+	holotreeBlueprintCmd.Flags().BoolVarP(&common.DevDependencies, "devdeps", "", false, "Include dev-dependencies from the `package.yaml` when calculating the blueprint (only valid when dealing with a `package.yaml` file).")
 }

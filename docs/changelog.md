@@ -1,5 +1,11 @@
 # rcc change log
 
+## v18.4.0 (date: 25.10.2024)
+
+- support `--show-blueprint` flag in `rcc holotree hash` to show blueprint.
+- support `--devdeps` flag in `rcc holotree hash` to compute hash considering `dev-dependencies`.
+- support `--devdeps` flag in `rcc holotree blueprint` to check blueprint considering `dev-dependencies`.
+
 ## v18.3.0 (date: 22.10.2024)
 
 - support `--devdeps` flag in `rcc holotree hash` to compute hash considering `dev-dependencies`.

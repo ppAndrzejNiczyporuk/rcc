@@ -107,3 +107,40 @@ def run_with_env(
         ), f"Unexpected exit code {ret!r} from {command!r} with output: {out!r} and error: {err!r}"
 
     return ret, out, err
+
+
+def normalize_output(output: str) -> str:
+    return output.strip().replace("\r\n", "\n").replace("\r", "\n")
+
+
+def run_and_check_expected_output(
+    command: str, expected_output: str, expected_file: str, use_stream: str = "stdout"
+):
+    from pathlib import Path
+
+    ret, out, err = run_and_return_code_output_error(command)
+    assert (
+        ret == 0
+    ), f"Unexpected exit code {ret!r} from {command!r} with output: {out!r} and error: {err!r}"
+
+    log.info(f"Output: {out!r}")
+    log.info(f"Error: {err!r}")
+
+    if use_stream == "stdout":
+        contents = out
+    else:
+        contents = err
+
+    f = Path(expected_file)
+    if not f.exists():
+        f.parent.mkdir(parents=True, exist_ok=True)
+        f.write_text(normalize_output(contents))
+        raise Exception(f"Expected file {expected_file!r} not found; created it")
+    else:
+        expected_output = f.read_text()
+        if normalize_output(contents) != normalize_output(expected_output):
+            raise Exception(
+                f"Output does not match expected output in {expected_file!r}\n"
+                f"Expected: {expected_output!r}\n"
+                f"Actual: {contents!r}"
+            )
