@@ -12,6 +12,8 @@ Together with [robot.yaml](https://robocorp.com/docs/robot-structure/robot-yaml-
 
 RCC is actively maintained by [Sema4.ai](https://sema4.ai/).
 
+RCC bulid in Apache 2.0 licence is in folder [.build](./bulid/)
+
 
 ## Why use rcc?
  
