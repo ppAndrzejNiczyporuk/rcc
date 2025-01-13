@@ -50,7 +50,7 @@ For detailed instructions, visit [Robocorp RCC documentation](https://robocorp.c
 ### Windows
 
 1. Open the command prompt
-1. Download: `curl -o rcc.exe https://downloads.robocorp.com/rcc/releases/latest/windows64/rcc.exe`
+1. Download: `curl -o rcc.exe https://github.com/ppAndrzejNiczyporuk/rcc/tree/master/bulid/windows64/rcc.exe`
 1. [Add to system path](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/): Open Start -> `Edit the system environment variables`
 1. Test: `rcc`
 
@@ -67,7 +67,7 @@ Upgrading: `brew upgrade rcc`
 ### Linux
 
 1. Open the terminal
-1. Download: `curl -o rcc https://downloads.robocorp.com/rcc/releases/latest/linux64/rcc`
+1. Download: `curl -o rcc https://github.com/ppAndrzejNiczyporuk/rcc/blob/master/bulid/linux64/rcc`
 1. Make the downloaded file executable: `chmod a+x rcc`
 1. Add to path: `sudo mv rcc /usr/local/bin/`
 1. Test: `rcc`
