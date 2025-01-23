@@ -47,7 +47,9 @@ For detailed instructions, visit [Robocorp RCC documentation](https://robocorp.c
 
 ## Installing RCC from the command line
 
-> Links to changelog and different versions [available here](https://downloads.robocorp.com/rcc/releases/index.html)
+> Links to Windows versions [available here](https://github.com/ppAndrzejNiczyporuk/rcc/blob/master/bulid/windows64/rcc.exe)
+> 
+> Links to Linux versions [available here](https://github.com/ppAndrzejNiczyporuk/rcc/blob/master/bulid/linux64/rcc)
 
 ### Windows
 
